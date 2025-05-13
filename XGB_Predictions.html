@@ -1,0 +1,441 @@
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>توقعات أوقات الانتظار - XGBoost</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; direction: rtl; }
+        h1 { color: #2c3e50; text-align: center; }
+        table { width: 80%; margin: 20px auto; border-collapse: collapse; }
+        th, td { padding: 12px; border: 1px solid #ddd; text-align: center; }
+        th { background-color: #6c757d; color: white; }
+        tr:nth-child(even) { background-color: #f2f2f2; }
+        .footer { margin-top: 20px; text-align: center; font-size: 12px; color: #7f8c8d; }
+        .wait-bar { height: 20px; background: #e9ecef; margin: 5px 0; }
+        .wait-fill { height: 100%; background: #28a745; }
+    </style>
+</head>
+<body>
+    <h1>توقعات أوقات الانتظار على الحواجز - XGBoost</h1>
+    <table>
+        <tr>
+            <th>اسم الحاجز</th>
+            <th>الحالة</th>
+            <th>الوقت المتوقع</th>
+            <th>النسبة</th>
+        </tr>
+
+        <tr>
+            <td>الخضر</td>
+            <td>open</td>
+            <td>28.799999237060547 دقيقة</td>
+            <td>
+                <div class="wait-bar">
+                    <div class="wait-fill" style="width: 4.16546106338501%"></div>
+                </div>
+            </td>
+        </tr>
+    
+        <tr>
+            <td>بيت ليد</td>
+            <td>open</td>
+            <td>1 ساعة و 54 دقيقة</td>
+            <td>
+                <div class="wait-bar">
+                    <div class="wait-fill" style="width: 16.488283157348633%"></div>
+                </div>
+            </td>
+        </tr>
+    
+        <tr>
+            <td>الباذان</td>
+            <td>open</td>
+            <td>11 ساعة و 31 دقيقة</td>
+            <td>
+                <div class="wait-bar">
+                    <div class="wait-fill" style="width: 100.0%"></div>
+                </div>
+            </td>
+        </tr>
+    
+        <tr>
+            <td>كانا</td>
+            <td>open</td>
+            <td>10 ساعة و 27 دقيقة</td>
+            <td>
+                <div class="wait-bar">
+                    <div class="wait-fill" style="width: 90.71449279785156%"></div>
+                </div>
+            </td>
+        </tr>
+    
+        <tr>
+            <td>الساوية</td>
+            <td>open</td>
+            <td>1 ساعة و 52 دقيقة</td>
+            <td>
+                <div class="wait-bar">
+                    <div class="wait-fill" style="width: 16.285797119140625%"></div>
+                </div>
+            </td>
+        </tr>
+    
+        <tr>
+            <td>ترمسعيا</td>
+            <td>open</td>
+            <td>7 ساعة و 3 دقيقة</td>
+            <td>
+                <div class="wait-bar">
+                    <div class="wait-fill" style="width: 61.26699447631836%"></div>
+                </div>
+            </td>
+        </tr>
+    
+        <tr>
+            <td>روابي</td>
+            <td>open</td>
+            <td>3 ساعة و 24 دقيقة</td>
+            <td>
+                <div class="wait-bar">
+                    <div class="wait-fill" style="width: 29.519813537597656%"></div>
+                </div>
+            </td>
+        </tr>
+    
+        <tr>
+            <td>سلفيت</td>
+            <td>closed</td>
+            <td>7 ساعة و 2 دقيقة</td>
+            <td>
+                <div class="wait-bar">
+                    <div class="wait-fill" style="width: 61.165748596191406%"></div>
+                </div>
+            </td>
+        </tr>
+    
+        <tr>
+            <td>جماعين</td>
+            <td>closed</td>
+            <td>7 ساعة و 50 دقيقة</td>
+            <td>
+                <div class="wait-bar">
+                    <div class="wait-fill" style="width: 68.07925415039062%"></div>
+                </div>
+            </td>
+        </tr>
+    
+        <tr>
+            <td>بيت جالا</td>
+            <td>open</td>
+            <td>4 ساعة و 52 دقيقة</td>
+            <td>
+                <div class="wait-bar">
+                    <div class="wait-fill" style="width: 42.33439636230469%"></div>
+                </div>
+            </td>
+        </tr>
+    
+        <tr>
+            <td>الزعيم</td>
+            <td>closed</td>
+            <td>2 ساعة و 57 دقيقة</td>
+            <td>
+                <div class="wait-bar">
+                    <div class="wait-fill" style="width: 25.73040199279785%"></div>
+                </div>
+            </td>
+        </tr>
+    
+        <tr>
+            <td>عناتا</td>
+            <td>closed</td>
+            <td>3 ساعة و 44 دقيقة</td>
+            <td>
+                <div class="wait-bar">
+                    <div class="wait-fill" style="width: 32.44142150878906%"></div>
+                </div>
+            </td>
+        </tr>
+    
+        <tr>
+            <td>كفر لاقف</td>
+            <td>open</td>
+            <td>3 ساعة و 34 دقيقة</td>
+            <td>
+                <div class="wait-bar">
+                    <div class="wait-fill" style="width: 31.08186149597168%"></div>
+                </div>
+            </td>
+        </tr>
+    
+        <tr>
+            <td>العيزرية</td>
+            <td>closed</td>
+            <td>2 ساعة و 35 دقيقة</td>
+            <td>
+                <div class="wait-bar">
+                    <div class="wait-fill" style="width: 22.4327449798584%"></div>
+                </div>
+            </td>
+        </tr>
+    
+        <tr>
+            <td>حارس</td>
+            <td>open</td>
+            <td>2 ساعة و 45 دقيقة</td>
+            <td>
+                <div class="wait-bar">
+                    <div class="wait-fill" style="width: 23.864620208740234%"></div>
+                </div>
+            </td>
+        </tr>
+    
+        <tr>
+            <td>الفندق</td>
+            <td>open</td>
+            <td>2 ساعة و 5 دقيقة</td>
+            <td>
+                <div class="wait-bar">
+                    <div class="wait-fill" style="width: 18.13711166381836%"></div>
+                </div>
+            </td>
+        </tr>
+    
+        <tr>
+            <td>النشاش</td>
+            <td>closed</td>
+            <td>1 ساعة و 44 دقيقة</td>
+            <td>
+                <div class="wait-bar">
+                    <div class="wait-fill" style="width: 15.157649993896484%"></div>
+                </div>
+            </td>
+        </tr>
+    
+        <tr>
+            <td>يتسهار</td>
+            <td>closed</td>
+            <td>2 ساعة و 6 دقيقة</td>
+            <td>
+                <div class="wait-bar">
+                    <div class="wait-fill" style="width: 18.29621124267578%"></div>
+                </div>
+            </td>
+        </tr>
+    
+        <tr>
+            <td>اريحا</td>
+            <td>sever_traffic_jam</td>
+            <td>1 ساعة و 16 دقيقة</td>
+            <td>
+                <div class="wait-bar">
+                    <div class="wait-fill" style="width: 11.02111530303955%"></div>
+                </div>
+            </td>
+        </tr>
+    
+        <tr>
+            <td>عقربا</td>
+            <td>open</td>
+            <td>3 ساعة و 48 دقيقة</td>
+            <td>
+                <div class="wait-bar">
+                    <div class="wait-fill" style="width: 33.10673904418945%"></div>
+                </div>
+            </td>
+        </tr>
+    
+        <tr>
+            <td>زعترة</td>
+            <td>open</td>
+            <td>1 ساعة و 24 دقيقة</td>
+            <td>
+                <div class="wait-bar">
+                    <div class="wait-fill" style="width: 12.149261474609375%"></div>
+                </div>
+            </td>
+        </tr>
+    
+        <tr>
+            <td>حواره</td>
+            <td>open</td>
+            <td>1 ساعة و 58 دقيقة</td>
+            <td>
+                <div class="wait-bar">
+                    <div class="wait-fill" style="width: 17.110210418701172%"></div>
+                </div>
+            </td>
+        </tr>
+    
+        <tr>
+            <td>النبي صالح</td>
+            <td>open</td>
+            <td>1 ساعة و 24 دقيقة</td>
+            <td>
+                <div class="wait-bar">
+                    <div class="wait-fill" style="width: 12.163725852966309%"></div>
+                </div>
+            </td>
+        </tr>
+    
+        <tr>
+            <td>بورين</td>
+            <td>closed</td>
+            <td>42.900001525878906 دقيقة</td>
+            <td>
+                <div class="wait-bar">
+                    <div class="wait-fill" style="width: 6.204801559448242%"></div>
+                </div>
+            </td>
+        </tr>
+    
+        <tr>
+            <td>بزاريا</td>
+            <td>open</td>
+            <td>1.0 دقيقة</td>
+            <td>
+                <div class="wait-bar">
+                    <div class="wait-fill" style="width: 0.14463406801223755%"></div>
+                </div>
+            </td>
+        </tr>
+    
+        <tr>
+            <td>شافي شمرون</td>
+            <td>open</td>
+            <td>39.0 دقيقة</td>
+            <td>
+                <div class="wait-bar">
+                    <div class="wait-fill" style="width: 5.640728950500488%"></div>
+                </div>
+            </td>
+        </tr>
+    
+        <tr>
+            <td>قلنديا</td>
+            <td>open</td>
+            <td>41.900001525878906 دقيقة</td>
+            <td>
+                <div class="wait-bar">
+                    <div class="wait-fill" style="width: 6.0601677894592285%"></div>
+                </div>
+            </td>
+        </tr>
+    
+        <tr>
+            <td>النبي يونس</td>
+            <td>open</td>
+            <td>46.900001525878906 دقيقة</td>
+            <td>
+                <div class="wait-bar">
+                    <div class="wait-fill" style="width: 6.7833380699157715%"></div>
+                </div>
+            </td>
+        </tr>
+    
+        <tr>
+            <td>دير شرف</td>
+            <td>open</td>
+            <td>29.5 دقيقة</td>
+            <td>
+                <div class="wait-bar">
+                    <div class="wait-fill" style="width: 4.26670503616333%"></div>
+                </div>
+            </td>
+        </tr>
+    
+        <tr>
+            <td>بديا</td>
+            <td>open</td>
+            <td>15.0 دقيقة</td>
+            <td>
+                <div class="wait-bar">
+                    <div class="wait-fill" style="width: 2.169511079788208%"></div>
+                </div>
+            </td>
+        </tr>
+    
+        <tr>
+            <td>عورتا</td>
+            <td>closed</td>
+            <td>33.29999923706055 دقيقة</td>
+            <td>
+                <div class="wait-bar">
+                    <div class="wait-fill" style="width: 4.816314697265625%"></div>
+                </div>
+            </td>
+        </tr>
+    
+        <tr>
+            <td>جبع</td>
+            <td>open</td>
+            <td>54.20000076293945 دقيقة</td>
+            <td>
+                <div class="wait-bar">
+                    <div class="wait-fill" style="width: 7.839166164398193%"></div>
+                </div>
+            </td>
+        </tr>
+    
+        <tr>
+            <td>المربعه</td>
+            <td>open</td>
+            <td>1 ساعة و 2 دقيقة</td>
+            <td>
+                <div class="wait-bar">
+                    <div class="wait-fill" style="width: 9.097482681274414%"></div>
+                </div>
+            </td>
+        </tr>
+    
+        <tr>
+            <td>الحمرا</td>
+            <td>closed</td>
+            <td>42.0 دقيقة</td>
+            <td>
+                <div class="wait-bar">
+                    <div class="wait-fill" style="width: 6.0746307373046875%"></div>
+                </div>
+            </td>
+        </tr>
+    
+        <tr>
+            <td>الكونتينر</td>
+            <td>open</td>
+            <td>35.0 دقيقة</td>
+            <td>
+                <div class="wait-bar">
+                    <div class="wait-fill" style="width: 5.062192440032959%"></div>
+                </div>
+            </td>
+        </tr>
+    
+        <tr>
+            <td>عين سينيا</td>
+            <td>sever_traffic_jam</td>
+            <td>1 ساعة و 16 دقيقة</td>
+            <td>
+                <div class="wait-bar">
+                    <div class="wait-fill" style="width: 11.07896900177002%"></div>
+                </div>
+            </td>
+        </tr>
+    
+        <tr>
+            <td>صره</td>
+            <td>open</td>
+            <td>1.0 دقيقة</td>
+            <td>
+                <div class="wait-bar">
+                    <div class="wait-fill" style="width: 0.14463406801223755%"></div>
+                </div>
+            </td>
+        </tr>
+    
+    </table>
+    <div class="footer">
+        تم إنشاء التقرير في: 2025-05-06 21:10 | نموذج XGBoost
+    </div>
+</body>
+</html>

@@ -1,0 +1,576 @@
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>تقرير توقعات أوقات الانتظار - XGBoost المحسن</title>
+    <style>
+        body {
+            font-family: 'Tahoma', sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #3498db;
+        }
+        .model-info {
+            background: #e8f4fc;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            padding: 12px 15px;
+            text-align: center;
+            border: 1px solid #ddd;
+        }
+        th {
+            background-color: #27ae60;
+            color: white;
+            font-weight: bold;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        .low-wait {
+            background-color: #d4edda;
+        }
+        .medium-wait {
+            background-color: #fff3cd;
+        }
+        .high-wait {
+            background-color: #f8d7da;
+        }
+        .wait-bar {
+            height: 20px;
+            background: #e9ecef;
+            margin: 5px 0;
+            border-radius: 3px;
+            overflow: hidden;
+        }
+        .wait-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #28a745, #007bff);
+        }
+        .footer {
+            margin-top: 30px;
+            text-align: center;
+            font-size: 13px;
+            color: #7f8c8d;
+            padding-top: 15px;
+            border-top: 1px solid #eee;
+        }
+        .stats {
+            display: flex;
+            justify-content: space-around;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+        .stat-box {
+            background: white;
+            padding: 15px;
+            border-radius: 5px;
+            box-shadow: 0 0 5px rgba(0,0,0,0.1);
+            width: 30%;
+            min-width: 200px;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>تقرير توقعات أوقات الانتظار</h1>
+        
+        <div class="model-info">
+            <h2>نموذج XGBoost المحسن</h2>
+            <p>متوسط الخطأ المطلق: 46.26 دقيقة</p>
+            <p>عدد الحواجز: 36</p>
+        </div>
+        
+        <div class="stats">
+            <div class="stat-box">
+                <h3>أقصر وقت انتظار</h3>
+                <p>12.0 دقيقة</p>
+            </div>
+            <div class="stat-box">
+                <h3>أطول وقت انتظار</h3>
+                <p>267.9 دقيقة</p>
+            </div>
+            <div class="stat-box">
+                <h3>متوسط وقت الانتظار</h3>
+                <p>102.4 دقيقة</p>
+            </div>
+        </div>
+        
+        <table>
+            <thead>
+                <tr>
+                    <th>رقم الحاجز</th>
+                    <th>الحالة</th>
+                    <th>الوقت المتوقع</th>
+                    <th>مستوى الانتظار</th>
+                    <th>التقدير المرئي</th>
+                </tr>
+            </thead>
+            <tbody>
+                
+        <tr class="high-wait">
+            <td>26</td>
+            <td>open</td>
+            <td>3 ساعة و 13 دقيقة</td>
+            <td>مرتفع</td>
+            <td>
+                <div class="wait-bar">
+                    <div class="wait-fill" style="width: 72.37775421142578%"></div>
+                </div>
+            </td>
+        </tr>
+        
+        <tr class="high-wait">
+            <td>30</td>
+            <td>open</td>
+            <td>1 ساعة و 39 دقيقة</td>
+            <td>مرتفع</td>
+            <td>
+                <div class="wait-bar">
+                    <div class="wait-fill" style="width: 37.252708435058594%"></div>
+                </div>
+            </td>
+        </tr>
+        
+        <tr class="high-wait">
+            <td>34</td>
+            <td>open</td>
+            <td>2 ساعة و 4 دقيقة</td>
+            <td>مرتفع</td>
+            <td>
+                <div class="wait-bar">
+                    <div class="wait-fill" style="width: 46.43524169921875%"></div>
+                </div>
+            </td>
+        </tr>
+        
+        <tr class="high-wait">
+            <td>36</td>
+            <td>closed</td>
+            <td>4 ساعة و 26 دقيقة</td>
+            <td>مرتفع</td>
+            <td>
+                <div class="wait-bar">
+                    <div class="wait-fill" style="width: 99.40276336669922%"></div>
+                </div>
+            </td>
+        </tr>
+        
+        <tr class="high-wait">
+            <td>38</td>
+            <td>open</td>
+            <td>2 ساعة و 16 دقيقة</td>
+            <td>مرتفع</td>
+            <td>
+                <div class="wait-bar">
+                    <div class="wait-fill" style="width: 50.76520919799805%"></div>
+                </div>
+            </td>
+        </tr>
+        
+        <tr class="high-wait">
+            <td>20</td>
+            <td>open</td>
+            <td>1 ساعة و 39 دقيقة</td>
+            <td>مرتفع</td>
+            <td>
+                <div class="wait-bar">
+                    <div class="wait-fill" style="width: 37.290035247802734%"></div>
+                </div>
+            </td>
+        </tr>
+        
+        <tr class="high-wait">
+            <td>19</td>
+            <td>closed</td>
+            <td>1 ساعة و 44 دقيقة</td>
+            <td>مرتفع</td>
+            <td>
+                <div class="wait-bar">
+                    <div class="wait-fill" style="width: 39.156402587890625%"></div>
+                </div>
+            </td>
+        </tr>
+        
+        <tr class="high-wait">
+            <td>13</td>
+            <td>open</td>
+            <td>4 ساعة و 1 دقيقة</td>
+            <td>مرتفع</td>
+            <td>
+                <div class="wait-bar">
+                    <div class="wait-fill" style="width: 90.03359985351562%"></div>
+                </div>
+            </td>
+        </tr>
+        
+        <tr class="high-wait">
+            <td>35</td>
+            <td>open</td>
+            <td>1 ساعة و 7 دقيقة</td>
+            <td>مرتفع</td>
+            <td>
+                <div class="wait-bar">
+                    <div class="wait-fill" style="width: 25.15864372253418%"></div>
+                </div>
+            </td>
+        </tr>
+        
+        <tr class="high-wait">
+            <td>4</td>
+            <td>open</td>
+            <td>3 ساعة و 27 دقيقة</td>
+            <td>مرتفع</td>
+            <td>
+                <div class="wait-bar">
+                    <div class="wait-fill" style="width: 77.5662612915039%"></div>
+                </div>
+            </td>
+        </tr>
+        
+        <tr class="high-wait">
+            <td>33</td>
+            <td>open</td>
+            <td>3 ساعة و 36 دقيقة</td>
+            <td>مرتفع</td>
+            <td>
+                <div class="wait-bar">
+                    <div class="wait-fill" style="width: 80.73908996582031%"></div>
+                </div>
+            </td>
+        </tr>
+        
+        <tr class="high-wait">
+            <td>27</td>
+            <td>open</td>
+            <td>4 ساعة و 27 دقيقة</td>
+            <td>مرتفع</td>
+            <td>
+                <div class="wait-bar">
+                    <div class="wait-fill" style="width: 100.0%"></div>
+                </div>
+            </td>
+        </tr>
+        
+        <tr class="high-wait">
+            <td>24</td>
+            <td>open</td>
+            <td>1 ساعة و 34 دقيقة</td>
+            <td>مرتفع</td>
+            <td>
+                <div class="wait-bar">
+                    <div class="wait-fill" style="width: 35.3490104675293%"></div>
+                </div>
+            </td>
+        </tr>
+        
+        <tr class="high-wait">
+            <td>22</td>
+            <td>closed</td>
+            <td>1 ساعة و 57 دقيقة</td>
+            <td>مرتفع</td>
+            <td>
+                <div class="wait-bar">
+                    <div class="wait-fill" style="width: 43.97163391113281%"></div>
+                </div>
+            </td>
+        </tr>
+        
+        <tr class="high-wait">
+            <td>32</td>
+            <td>open</td>
+            <td>2 ساعة و 23 دقيقة</td>
+            <td>مرتفع</td>
+            <td>
+                <div class="wait-bar">
+                    <div class="wait-fill" style="width: 53.63941955566406%"></div>
+                </div>
+            </td>
+        </tr>
+        
+        <tr class="high-wait">
+            <td>23</td>
+            <td>open</td>
+            <td>1 ساعة و 19 دقيقة</td>
+            <td>مرتفع</td>
+            <td>
+                <div class="wait-bar">
+                    <div class="wait-fill" style="width: 29.675251007080078%"></div>
+                </div>
+            </td>
+        </tr>
+        
+        <tr class="high-wait">
+            <td>29</td>
+            <td>open</td>
+            <td>3 ساعة و 33 دقيقة</td>
+            <td>مرتفع</td>
+            <td>
+                <div class="wait-bar">
+                    <div class="wait-fill" style="width: 79.54460906982422%"></div>
+                </div>
+            </td>
+        </tr>
+        
+        <tr class="medium-wait">
+            <td>12</td>
+            <td>open</td>
+            <td>32.8 دقيقة</td>
+            <td>متوسط</td>
+            <td>
+                <div class="wait-bar">
+                    <div class="wait-fill" style="width: 12.243374824523926%"></div>
+                </div>
+            </td>
+        </tr>
+        
+        <tr class="medium-wait">
+            <td>18</td>
+            <td>open</td>
+            <td>54.4 دقيقة</td>
+            <td>متوسط</td>
+            <td>
+                <div class="wait-bar">
+                    <div class="wait-fill" style="width: 20.30608558654785%"></div>
+                </div>
+            </td>
+        </tr>
+        
+        <tr class="high-wait">
+            <td>3</td>
+            <td>open</td>
+            <td>1 ساعة و 3 دقيقة</td>
+            <td>مرتفع</td>
+            <td>
+                <div class="wait-bar">
+                    <div class="wait-fill" style="width: 23.814857482910156%"></div>
+                </div>
+            </td>
+        </tr>
+        
+        <tr class="medium-wait">
+            <td>14</td>
+            <td>closed</td>
+            <td>52.4 دقيقة</td>
+            <td>متوسط</td>
+            <td>
+                <div class="wait-bar">
+                    <div class="wait-fill" style="width: 19.559537887573242%"></div>
+                </div>
+            </td>
+        </tr>
+        
+        <tr class="high-wait">
+            <td>15</td>
+            <td>closed</td>
+            <td>1 ساعة و 14 دقيقة</td>
+            <td>مرتفع</td>
+            <td>
+                <div class="wait-bar">
+                    <div class="wait-fill" style="width: 27.62224578857422%"></div>
+                </div>
+            </td>
+        </tr>
+        
+        <tr class="medium-wait">
+            <td>9</td>
+            <td>closed</td>
+            <td>52.1 دقيقة</td>
+            <td>متوسط</td>
+            <td>
+                <div class="wait-bar">
+                    <div class="wait-fill" style="width: 19.447555541992188%"></div>
+                </div>
+            </td>
+        </tr>
+        
+        <tr class="medium-wait">
+            <td>17</td>
+            <td>closed</td>
+            <td>34.5 دقيقة</td>
+            <td>متوسط</td>
+            <td>
+                <div class="wait-bar">
+                    <div class="wait-fill" style="width: 12.877939224243164%"></div>
+                </div>
+            </td>
+        </tr>
+        
+        <tr class="high-wait">
+            <td>7</td>
+            <td>open</td>
+            <td>1 ساعة و 14 دقيقة</td>
+            <td>مرتفع</td>
+            <td>
+                <div class="wait-bar">
+                    <div class="wait-fill" style="width: 27.808883666992188%"></div>
+                </div>
+            </td>
+        </tr>
+        
+        <tr class="high-wait">
+            <td>11</td>
+            <td>open</td>
+            <td>1 ساعة و 4 دقيقة</td>
+            <td>مرتفع</td>
+            <td>
+                <div class="wait-bar">
+                    <div class="wait-fill" style="width: 24.113473892211914%"></div>
+                </div>
+            </td>
+        </tr>
+        
+        <tr class="medium-wait">
+            <td>37</td>
+            <td>open</td>
+            <td>51.6 دقيقة</td>
+            <td>متوسط</td>
+            <td>
+                <div class="wait-bar">
+                    <div class="wait-fill" style="width: 19.26091766357422%"></div>
+                </div>
+            </td>
+        </tr>
+        
+        <tr class="medium-wait">
+            <td>31</td>
+            <td>open</td>
+            <td>51.7 دقيقة</td>
+            <td>متوسط</td>
+            <td>
+                <div class="wait-bar">
+                    <div class="wait-fill" style="width: 19.298246383666992%"></div>
+                </div>
+            </td>
+        </tr>
+        
+        <tr class="high-wait">
+            <td>6</td>
+            <td>open</td>
+            <td>1 ساعة و 4 دقيقة</td>
+            <td>مرتفع</td>
+            <td>
+                <div class="wait-bar">
+                    <div class="wait-fill" style="width: 24.001493453979492%"></div>
+                </div>
+            </td>
+        </tr>
+        
+        <tr class="high-wait">
+            <td>21</td>
+            <td>sever_traffic_jam</td>
+            <td>1 ساعة و 41 دقيقة</td>
+            <td>مرتفع</td>
+            <td>
+                <div class="wait-bar">
+                    <div class="wait-fill" style="width: 37.70063400268555%"></div>
+                </div>
+            </td>
+        </tr>
+        
+        <tr class="medium-wait">
+            <td>16</td>
+            <td>open</td>
+            <td>57.5 دقيقة</td>
+            <td>متوسط</td>
+            <td>
+                <div class="wait-bar">
+                    <div class="wait-fill" style="width: 21.463233947753906%"></div>
+                </div>
+            </td>
+        </tr>
+        
+        <tr class="medium-wait">
+            <td>10</td>
+            <td>open</td>
+            <td>45.7 دقيقة</td>
+            <td>متوسط</td>
+            <td>
+                <div class="wait-bar">
+                    <div class="wait-fill" style="width: 17.058605194091797%"></div>
+                </div>
+            </td>
+        </tr>
+        
+        <tr class="low-wait">
+            <td>8</td>
+            <td>closed</td>
+            <td>29.9 دقيقة</td>
+            <td>منخفض</td>
+            <td>
+                <div class="wait-bar">
+                    <div class="wait-fill" style="width: 11.160881042480469%"></div>
+                </div>
+            </td>
+        </tr>
+        
+        <tr class="low-wait">
+            <td>1</td>
+            <td>sever_traffic_jam</td>
+            <td>12.0 دقيقة</td>
+            <td>منخفض</td>
+            <td>
+                <div class="wait-bar">
+                    <div class="wait-fill" style="width: 4.479283332824707%"></div>
+                </div>
+            </td>
+        </tr>
+        
+        <tr class="low-wait">
+            <td>2</td>
+            <td>closed</td>
+            <td>25.0 دقيقة</td>
+            <td>منخفض</td>
+            <td>
+                <div class="wait-bar">
+                    <div class="wait-fill" style="width: 9.331840515136719%"></div>
+                </div>
+            </td>
+        </tr>
+        
+        <tr class="high-wait">
+            <td>5</td>
+            <td>open</td>
+            <td>1 ساعة و 11 دقيقة</td>
+            <td>مرتفع</td>
+            <td>
+                <div class="wait-bar">
+                    <div class="wait-fill" style="width: 26.50242805480957%"></div>
+                </div>
+            </td>
+        </tr>
+        
+            </tbody>
+        </table>
+        
+        <div class="footer">
+            تم إنشاء التقرير في: 2025-05-06 19:36
+        </div>
+    </div>
+</body>
+</html>
+    

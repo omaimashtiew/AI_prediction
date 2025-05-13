@@ -1,0 +1,395 @@
+
+        <!DOCTYPE html>
+        <html lang="en">
+        <head>
+            <meta charset="UTF-8">
+            <title>Enhanced Wait Time Predictions</title>
+            <style>
+                body { font-family: Arial, sans-serif; margin: 20px; }
+                h1 { color: #2c3e50; text-align: center; }
+                .header { background-color: #f8f9fa; padding: 15px; border-radius: 5px; }
+                table { width: 95%; margin: 20px auto; border-collapse: collapse; }
+                th, td { padding: 12px; border: 1px solid #ddd; text-align: center; }
+                th { background-color: #4a6baf; color: white; }
+                tr:nth-child(even) { background-color: #f2f2f2; }
+                .footer { margin-top: 20px; text-align: center; font-size: 12px; color: #7f8c8d; }
+                .info { text-align: center; margin: 15px 0; color: #4a6baf; font-weight: bold; }
+                .status-open { color: #28a745; font-weight: bold; }
+                .status-closed { color: #dc3545; font-weight: bold; }
+                .status-jam { color: #fd7e14; font-weight: bold; }
+                .prediction { font-weight: bold; }
+                .duration-pred { color: #6c757d; }
+            </style>
+        </head>
+        <body>
+            <div class="header">
+                <h1>Fence Status and Wait Time Predictions</h1>
+                <div class="info">
+                    Report Time: 2025-05-08 15:46 | 
+                    Day: Thursday | 
+                    Current Hour: 15:46
+                </div>
+            </div>
+            <table>
+                <tr>
+                    <th>Fence Name</th>
+                    <th>Location</th>
+                    <th>Current Status</th>
+                    <th>Predicted Status</th>
+                    <th>Avg Recovery Time</th>
+                    <th>XGBoost Wait Prediction</th>
+                </tr>
+        
+                <tr>
+                    <td>كانا</td>
+                    <td>قلقيلية (Lat: 32.1531, Long: 35.1240)</td>
+                    <td class="status-open">open</td>
+                    <td class="status-open prediction">open</td>
+                    <td class="duration-pred">6h 13m</td>
+                    <td class="duration-pred">-</td>
+                </tr>
+            
+                <tr>
+                    <td>الخضر</td>
+                    <td>بيت لحم (Lat: 31.6943, Long: 35.1658)</td>
+                    <td class="status-open">open</td>
+                    <td class="status-open prediction">open</td>
+                    <td class="duration-pred">-</td>
+                    <td class="duration-pred">-</td>
+                </tr>
+            
+                <tr>
+                    <td>بيت ليد</td>
+                    <td>None (Lat: 32.2613, Long: 35.1304)</td>
+                    <td class="status-open">open</td>
+                    <td class="status-open prediction">open</td>
+                    <td class="duration-pred">-</td>
+                    <td class="duration-pred">-</td>
+                </tr>
+            
+                <tr>
+                    <td>بيت جالا</td>
+                    <td>None (Lat: 31.7123, Long: 35.1848)</td>
+                    <td class="status-open">open</td>
+                    <td class="status-open prediction">open</td>
+                    <td class="duration-pred">3h 37m</td>
+                    <td class="duration-pred">-</td>
+                </tr>
+            
+                <tr>
+                    <td>الباذان</td>
+                    <td>None (Lat: 32.2593, Long: 35.3252)</td>
+                    <td class="status-open">open</td>
+                    <td class="status-open prediction">open</td>
+                    <td class="duration-pred">-</td>
+                    <td class="duration-pred">-</td>
+                </tr>
+            
+                <tr>
+                    <td>الحمرا</td>
+                    <td>اريحا (Lat: 31.8560, Long: 35.4603)</td>
+                    <td class="status-open">open</td>
+                    <td class="status-open prediction">open</td>
+                    <td class="duration-pred">3h 40m</td>
+                    <td class="duration-pred">-</td>
+                </tr>
+            
+                <tr>
+                    <td>الكونتينر</td>
+                    <td>القدس (Lat: 31.7420, Long: 35.2893)</td>
+                    <td class="status-closed">closed</td>
+                    <td class="status-open prediction">open</td>
+                    <td class="duration-pred">2h 14m</td>
+                    <td class="duration-pred">-</td>
+                </tr>
+            
+                <tr>
+                    <td>يتسهار</td>
+                    <td>نابلس (Lat: 32.1685, Long: 35.2337)</td>
+                    <td class="status-sever_traffic_jam">sever_traffic_jam</td>
+                    <td class="status-open prediction">open</td>
+                    <td class="duration-pred">1h 58m</td>
+                    <td class="duration-pred">-</td>
+                </tr>
+            
+                <tr>
+                    <td>روابي</td>
+                    <td>رام الله (Lat: 32.0098, Long: 35.1902)</td>
+                    <td class="status-open">open</td>
+                    <td class="status-open prediction">open</td>
+                    <td class="duration-pred">4h 1m</td>
+                    <td class="duration-pred">-</td>
+                </tr>
+            
+                <tr>
+                    <td>النبي صالح</td>
+                    <td>رام الله (Lat: 32.0155, Long: 35.1223)</td>
+                    <td class="status-open">open</td>
+                    <td class="status-open prediction">open</td>
+                    <td class="duration-pred">-</td>
+                    <td class="duration-pred">-</td>
+                </tr>
+            
+                <tr>
+                    <td>قلنديا</td>
+                    <td>القدس (Lat: 31.8632, Long: 35.2070)</td>
+                    <td class="status-closed">closed</td>
+                    <td class="status-open prediction">open</td>
+                    <td class="duration-pred">4h 14m</td>
+                    <td class="duration-pred">-</td>
+                </tr>
+            
+                <tr>
+                    <td>الساوية</td>
+                    <td>None (Lat: 32.0831, Long: 35.2579)</td>
+                    <td class="status-open">open</td>
+                    <td class="status-open prediction">open</td>
+                    <td class="duration-pred">-</td>
+                    <td class="duration-pred">-</td>
+                </tr>
+            
+                <tr>
+                    <td>النبي يونس</td>
+                    <td>الخليل (Lat: 31.5703, Long: 35.1109)</td>
+                    <td class="status-open">open</td>
+                    <td class="status-open prediction">open</td>
+                    <td class="duration-pred">3h 4m</td>
+                    <td class="duration-pred">-</td>
+                </tr>
+            
+                <tr>
+                    <td>زعترة</td>
+                    <td>بيت لحم (Lat: 31.6702, Long: 35.2572)</td>
+                    <td class="status-open">open</td>
+                    <td class="status-open prediction">open</td>
+                    <td class="duration-pred">4h 22m</td>
+                    <td class="duration-pred">-</td>
+                </tr>
+            
+                <tr>
+                    <td>بديا</td>
+                    <td>None (Lat: 32.1106, Long: 35.0691)</td>
+                    <td class="status-open">open</td>
+                    <td class="status-open prediction">open</td>
+                    <td class="duration-pred">3h 30m</td>
+                    <td class="duration-pred">-</td>
+                </tr>
+            
+                <tr>
+                    <td>الزعيم</td>
+                    <td>القدس (Lat: 31.7871, Long: 35.2661)</td>
+                    <td class="status-open">open</td>
+                    <td class="status-open prediction">open</td>
+                    <td class="duration-pred">3h 41m</td>
+                    <td class="duration-pred">-</td>
+                </tr>
+            
+                <tr>
+                    <td>جماعين</td>
+                    <td>None (Lat: 32.1323, Long: 35.2072)</td>
+                    <td class="status-closed">closed</td>
+                    <td class="status-open prediction">open</td>
+                    <td class="duration-pred">5h 44m</td>
+                    <td class="duration-pred">-</td>
+                </tr>
+            
+                <tr>
+                    <td>كفر لاقف</td>
+                    <td>None (Lat: 32.1831, Long: 35.0913)</td>
+                    <td class="status-open">open</td>
+                    <td class="status-open prediction">open</td>
+                    <td class="duration-pred">4h 52m</td>
+                    <td class="duration-pred">-</td>
+                </tr>
+            
+                <tr>
+                    <td>المربعه</td>
+                    <td>نابلس (Lat: 32.2227, Long: 35.2621)</td>
+                    <td class="status-open">open</td>
+                    <td class="status-open prediction">open</td>
+                    <td class="duration-pred">5h 23m</td>
+                    <td class="duration-pred">-</td>
+                </tr>
+            
+                <tr>
+                    <td>بورين</td>
+                    <td>None (Lat: 32.1809, Long: 35.2492)</td>
+                    <td class="status-closed">closed</td>
+                    <td class="status-open prediction">open</td>
+                    <td class="duration-pred">3h 48m</td>
+                    <td class="duration-pred">-</td>
+                </tr>
+            
+                <tr>
+                    <td>حارس</td>
+                    <td>None (Lat: 32.1127, Long: 35.1440)</td>
+                    <td class="status-open">open</td>
+                    <td class="status-open prediction">open</td>
+                    <td class="duration-pred">3h 13m</td>
+                    <td class="duration-pred">-</td>
+                </tr>
+            
+                <tr>
+                    <td>عين سينيا</td>
+                    <td>رام الله (Lat: 31.9713, Long: 35.2295)</td>
+                    <td class="status-closed">closed</td>
+                    <td class="status-open prediction">open</td>
+                    <td class="duration-pred">2h 21m</td>
+                    <td class="duration-pred">-</td>
+                </tr>
+            
+                <tr>
+                    <td>اريحا</td>
+                    <td>اريحا (Lat: 31.8469, Long: 35.4611)</td>
+                    <td class="status-open">open</td>
+                    <td class="status-open prediction">open</td>
+                    <td class="duration-pred">3h 27m</td>
+                    <td class="duration-pred">-</td>
+                </tr>
+            
+                <tr>
+                    <td>عناتا</td>
+                    <td>None (Lat: 31.8080, Long: 35.2571)</td>
+                    <td class="status-open">open</td>
+                    <td class="status-open prediction">open</td>
+                    <td class="duration-pred">2h 43m</td>
+                    <td class="duration-pred">-</td>
+                </tr>
+            
+                <tr>
+                    <td>النشاش</td>
+                    <td>بيت لحم (Lat: 31.6939, Long: 35.1678)</td>
+                    <td class="status-open">open</td>
+                    <td class="status-open prediction">open</td>
+                    <td class="duration-pred">5h 56m</td>
+                    <td class="duration-pred">-</td>
+                </tr>
+            
+                <tr>
+                    <td>النفق</td>
+                    <td>بيت لحم (Lat: 31.7052, Long: 35.2127)</td>
+                    <td class="status-open">open</td>
+                    <td class="status-open prediction">open</td>
+                    <td class="duration-pred">7h 15m</td>
+                    <td class="duration-pred">-</td>
+                </tr>
+            
+                <tr>
+                    <td>عقربا</td>
+                    <td>None (Lat: 32.1243, Long: 35.3458)</td>
+                    <td class="status-open">open</td>
+                    <td class="status-open prediction">open</td>
+                    <td class="duration-pred">7h 42m</td>
+                    <td class="duration-pred">-</td>
+                </tr>
+            
+                <tr>
+                    <td>بزاريا</td>
+                    <td>None (Lat: 32.3077, Long: 35.1656)</td>
+                    <td class="status-open">open</td>
+                    <td class="status-open prediction">open</td>
+                    <td class="duration-pred">1h 23m</td>
+                    <td class="duration-pred">-</td>
+                </tr>
+            
+                <tr>
+                    <td>سلفيت</td>
+                    <td>سلفيت (Lat: 32.0837, Long: 35.1882)</td>
+                    <td class="status-open">open</td>
+                    <td class="status-open prediction">open</td>
+                    <td class="duration-pred">4h 2m</td>
+                    <td class="duration-pred">-</td>
+                </tr>
+            
+                <tr>
+                    <td>العيزرية</td>
+                    <td>القدس (Lat: 31.7710, Long: 35.2610)</td>
+                    <td class="status-open">open</td>
+                    <td class="status-open prediction">open</td>
+                    <td class="duration-pred">2h 40m</td>
+                    <td class="duration-pred">-</td>
+                </tr>
+            
+                <tr>
+                    <td>حواره</td>
+                    <td>نابلس (Lat: 32.1590, Long: 35.2836)</td>
+                    <td class="status-open">open</td>
+                    <td class="status-open prediction">open</td>
+                    <td class="duration-pred">3h 39m</td>
+                    <td class="duration-pred">-</td>
+                </tr>
+            
+                <tr>
+                    <td>عورتا</td>
+                    <td>نابلس (Lat: 32.1637, Long: 35.2877)</td>
+                    <td class="status-open">open</td>
+                    <td class="status-open prediction">open</td>
+                    <td class="duration-pred">2h 2m</td>
+                    <td class="duration-pred">-</td>
+                </tr>
+            
+                <tr>
+                    <td>شافي شمرون</td>
+                    <td>NULL (Lat: 32.2751, Long: 35.1947)</td>
+                    <td class="status-open">open</td>
+                    <td class="status-open prediction">open</td>
+                    <td class="duration-pred">3h 18m</td>
+                    <td class="duration-pred">-</td>
+                </tr>
+            
+                <tr>
+                    <td>جبع</td>
+                    <td>None (Lat: 32.3231, Long: 35.2205)</td>
+                    <td class="status-sever_traffic_jam">sever_traffic_jam</td>
+                    <td class="status-open prediction">open</td>
+                    <td class="duration-pred">2h 29m</td>
+                    <td class="duration-pred">-</td>
+                </tr>
+            
+                <tr>
+                    <td>ترمسعيا</td>
+                    <td>رام الله (Lat: 32.0351, Long: 35.2861)</td>
+                    <td class="status-open">open</td>
+                    <td class="status-open prediction">open</td>
+                    <td class="duration-pred">2h 30m</td>
+                    <td class="duration-pred">-</td>
+                </tr>
+            
+                <tr>
+                    <td>الفندق</td>
+                    <td>قلقيلية (Lat: 32.1907, Long: 35.1367)</td>
+                    <td class="status-open">open</td>
+                    <td class="status-open prediction">open</td>
+                    <td class="duration-pred">2h 55m</td>
+                    <td class="duration-pred">-</td>
+                </tr>
+            
+                <tr>
+                    <td>صره</td>
+                    <td>نابلس (Lat: 32.2094, Long: 35.1899)</td>
+                    <td class="status-open">open</td>
+                    <td class="status-open prediction">open</td>
+                    <td class="duration-pred">2h 58m</td>
+                    <td class="duration-pred">-</td>
+                </tr>
+            
+                <tr>
+                    <td>دير شرف</td>
+                    <td>نابلس (Lat: 32.2534, Long: 35.1883)</td>
+                    <td class="status-open">open</td>
+                    <td class="status-open prediction">open</td>
+                    <td class="duration-pred">1h 54m</td>
+                    <td class="duration-pred">-</td>
+                </tr>
+            
+            </table>
+            <div class="footer">
+                Report generated using:<br>
+                1. RandomForest model for status prediction<br>
+                2. Historical average recovery time (max 24 hours)<br>
+                3. XGBoost model for wait time prediction<br>
+                Last updated: 2025-05-08 15:49
+            </div>
+        </body>
+        </html>
+        

@@ -1,0 +1,542 @@
+
+        <!DOCTYPE html>
+        <html lang="ar" dir="rtl">
+        <head>
+            <meta charset="UTF-8">
+            <title>توقعات أوقات الانتظار - النموذج المحسن</title>
+            <style>
+                body { font-family: Arial, sans-serif; margin: 20px; direction: rtl; }
+                h1 { color: #2c3e50; text-align: center; }
+                table { width: 95%; margin: 20px auto; border-collapse: collapse; }
+                th, td { padding: 12px; border: 1px solid #ddd; text-align: center; }
+                th { background-color: #4a6baf; color: white; }
+                tr:nth-child(even) { background-color: #f2f2f2; }
+                .footer { margin-top: 20px; text-align: center; font-size: 12px; color: #7f8c8d; }
+                .wait-bar { height: 20px; background: #e9ecef; margin: 5px 0; border-radius: 4px; }
+                .wait-fill { height: 100%; border-radius: 4px; }
+                .info { text-align: center; margin: 15px 0; color: #4a6baf; font-weight: bold; }
+                .status-open { color: #28a745; }
+                .status-closed { color: #dc3545; }
+                .status-jam { color: #fd7e14; }
+                .warning { color: #ffc107; font-weight: bold; }
+            </style>
+        </head>
+        <body>
+            <h1>توقعات أوقات الانتظار على الحواجز</h1>
+            <div class="info">
+                وقت التقرير: 2025-05-07 15:30 | 
+                يوم: الأربعاء | 
+                الساعة: 15:00
+            </div>
+            <table>
+                <tr>
+                    <th>اسم الحاجز</th>
+                    <th>الحالة</th>
+                    <th>الوقت المتوقع</th>
+                    <th>النسبة</th>
+                    <th>ملاحظات</th>
+                </tr>
+        
+                <tr>
+                    <td>النفق</td>
+                    <td class="status-open">مفتوح</td>
+                    <td>36.2 دقيقة</td>
+                    <td>
+                        <div class="wait-bar">
+                            <div class="wait-fill" style="width: 9.594487145507555%; background: #28a745"></div>
+                        </div>
+                        9.6%
+                    </td>
+                    <td></td>
+                </tr>
+            
+                <tr>
+                    <td>الخضر</td>
+                    <td class="status-open">مفتوح</td>
+                    <td>31.5 دقيقة</td>
+                    <td>
+                        <div class="wait-bar">
+                            <div class="wait-fill" style="width: 8.348794063079778%; background: #28a745"></div>
+                        </div>
+                        8.3%
+                    </td>
+                    <td></td>
+                </tr>
+            
+                <tr>
+                    <td>بيت ليد</td>
+                    <td class="status-open">مفتوح</td>
+                    <td>43.3 دقيقة</td>
+                    <td>
+                        <div class="wait-bar">
+                            <div class="wait-fill" style="width: 11.476278823217598%; background: #28a745"></div>
+                        </div>
+                        11.5%
+                    </td>
+                    <td></td>
+                </tr>
+            
+                <tr>
+                    <td>الباذان</td>
+                    <td class="status-open">مفتوح</td>
+                    <td>38.8 دقيقة</td>
+                    <td>
+                        <div class="wait-bar">
+                            <div class="wait-fill" style="width: 10.283593957063344%; background: #28a745"></div>
+                        </div>
+                        10.3%
+                    </td>
+                    <td></td>
+                </tr>
+            
+                <tr>
+                    <td>جماعين</td>
+                    <td class="status-closed">مغلق</td>
+                    <td>6 ساعة و 17 دقيقة</td>
+                    <td>
+                        <div class="wait-bar">
+                            <div class="wait-fill" style="width: 100.0%; background: #dc3545"></div>
+                        </div>
+                        100.0%
+                    </td>
+                    <td></td>
+                </tr>
+            
+                <tr>
+                    <td>بيت جالا</td>
+                    <td class="status-open">مفتوح</td>
+                    <td>33.3 دقيقة</td>
+                    <td>
+                        <div class="wait-bar">
+                            <div class="wait-fill" style="width: 8.825868009541479%; background: #28a745"></div>
+                        </div>
+                        8.8%
+                    </td>
+                    <td></td>
+                </tr>
+            
+                <tr>
+                    <td>كفر لاقف</td>
+                    <td class="status-open">مفتوح</td>
+                    <td>39.6 دقيقة</td>
+                    <td>
+                        <div class="wait-bar">
+                            <div class="wait-fill" style="width: 10.495626822157435%; background: #28a745"></div>
+                        </div>
+                        10.5%
+                    </td>
+                    <td></td>
+                </tr>
+            
+                <tr>
+                    <td>عقربا</td>
+                    <td class="status-open">مفتوح</td>
+                    <td>40.8 دقيقة</td>
+                    <td>
+                        <div class="wait-bar">
+                            <div class="wait-fill" style="width: 10.813676119798568%; background: #28a745"></div>
+                        </div>
+                        10.8%
+                    </td>
+                    <td></td>
+                </tr>
+            
+                <tr>
+                    <td>روابي</td>
+                    <td class="status-open">مفتوح</td>
+                    <td>41.0 دقيقة</td>
+                    <td>
+                        <div class="wait-bar">
+                            <div class="wait-fill" style="width: 10.86668433607209%; background: #28a745"></div>
+                        </div>
+                        10.9%
+                    </td>
+                    <td></td>
+                </tr>
+            
+                <tr>
+                    <td>شافي شمرون</td>
+                    <td class="status-open">مفتوح</td>
+                    <td>38.2 دقيقة</td>
+                    <td>
+                        <div class="wait-bar">
+                            <div class="wait-fill" style="width: 10.124569308242778%; background: #28a745"></div>
+                        </div>
+                        10.1%
+                    </td>
+                    <td></td>
+                </tr>
+            
+                <tr>
+                    <td>كانا</td>
+                    <td class="status-open">مفتوح</td>
+                    <td>43.1 دقيقة</td>
+                    <td>
+                        <div class="wait-bar">
+                            <div class="wait-fill" style="width: 11.423270606944076%; background: #28a745"></div>
+                        </div>
+                        11.4%
+                    </td>
+                    <td></td>
+                </tr>
+            
+                <tr>
+                    <td>النبي صالح</td>
+                    <td class="status-open">مفتوح</td>
+                    <td>40.0 دقيقة</td>
+                    <td>
+                        <div class="wait-bar">
+                            <div class="wait-fill" style="width: 10.601643254704479%; background: #28a745"></div>
+                        </div>
+                        10.6%
+                    </td>
+                    <td></td>
+                </tr>
+            
+                <tr>
+                    <td>بديا</td>
+                    <td class="status-open">مفتوح</td>
+                    <td>30.7 دقيقة</td>
+                    <td>
+                        <div class="wait-bar">
+                            <div class="wait-fill" style="width: 8.136761197985686%; background: #28a745"></div>
+                        </div>
+                        8.1%
+                    </td>
+                    <td></td>
+                </tr>
+            
+                <tr>
+                    <td>سلفيت</td>
+                    <td class="status-open">مفتوح</td>
+                    <td>38.4 دقيقة</td>
+                    <td>
+                        <div class="wait-bar">
+                            <div class="wait-fill" style="width: 10.1775775245163%; background: #28a745"></div>
+                        </div>
+                        10.2%
+                    </td>
+                    <td></td>
+                </tr>
+            
+                <tr>
+                    <td>بزاريا</td>
+                    <td class="status-open">مفتوح</td>
+                    <td>36.3 دقيقة</td>
+                    <td>
+                        <div class="wait-bar">
+                            <div class="wait-fill" style="width: 9.620991253644313%; background: #28a745"></div>
+                        </div>
+                        9.6%
+                    </td>
+                    <td></td>
+                </tr>
+            
+                <tr>
+                    <td>عين سينيا</td>
+                    <td class="status-open">مفتوح</td>
+                    <td>39.9 دقيقة</td>
+                    <td>
+                        <div class="wait-bar">
+                            <div class="wait-fill" style="width: 10.575139146567718%; background: #28a745"></div>
+                        </div>
+                        10.6%
+                    </td>
+                    <td></td>
+                </tr>
+            
+                <tr>
+                    <td>ترمسعيا</td>
+                    <td class="status-open">مفتوح</td>
+                    <td>39.1 دقيقة</td>
+                    <td>
+                        <div class="wait-bar">
+                            <div class="wait-fill" style="width: 10.363106281473629%; background: #28a745"></div>
+                        </div>
+                        10.4%
+                    </td>
+                    <td></td>
+                </tr>
+            
+                <tr>
+                    <td>حواره</td>
+                    <td class="status-open">مفتوح</td>
+                    <td>38.4 دقيقة</td>
+                    <td>
+                        <div class="wait-bar">
+                            <div class="wait-fill" style="width: 10.1775775245163%; background: #28a745"></div>
+                        </div>
+                        10.2%
+                    </td>
+                    <td></td>
+                </tr>
+            
+                <tr>
+                    <td>حارس</td>
+                    <td class="status-open">مفتوح</td>
+                    <td>34.6 دقيقة</td>
+                    <td>
+                        <div class="wait-bar">
+                            <div class="wait-fill" style="width: 9.170421415319375%; background: #28a745"></div>
+                        </div>
+                        9.2%
+                    </td>
+                    <td></td>
+                </tr>
+            
+                <tr>
+                    <td>الزعيم</td>
+                    <td class="status-sever_traffic_jam">ازدحام شديد</td>
+                    <td>1 ساعة و 24 دقيقة</td>
+                    <td>
+                        <div class="wait-bar">
+                            <div class="wait-fill" style="width: 22.31645905115293%; background: #fd7e14"></div>
+                        </div>
+                        22.3%
+                    </td>
+                    <td></td>
+                </tr>
+            
+                <tr>
+                    <td>الساوية</td>
+                    <td class="status-open">مفتوح</td>
+                    <td>40.6 دقيقة</td>
+                    <td>
+                        <div class="wait-bar">
+                            <div class="wait-fill" style="width: 10.760667903525047%; background: #28a745"></div>
+                        </div>
+                        10.8%
+                    </td>
+                    <td></td>
+                </tr>
+            
+                <tr>
+                    <td>يتسهار</td>
+                    <td class="status-sever_traffic_jam">ازدحام شديد</td>
+                    <td>2 ساعة و 6 دقيقة</td>
+                    <td>
+                        <div class="wait-bar">
+                            <div class="wait-fill" style="width: 33.52769679300292%; background: #fd7e14"></div>
+                        </div>
+                        33.5%
+                    </td>
+                    <td></td>
+                </tr>
+            
+                <tr>
+                    <td>عناتا</td>
+                    <td class="status-sever_traffic_jam">ازدحام شديد</td>
+                    <td>26.4 دقيقة</td>
+                    <td>
+                        <div class="wait-bar">
+                            <div class="wait-fill" style="width: 6.997084548104955%; background: #fd7e14"></div>
+                        </div>
+                        7.0%
+                    </td>
+                    <td></td>
+                </tr>
+            
+                <tr>
+                    <td>زعترة</td>
+                    <td class="status-sever_traffic_jam">ازدحام شديد</td>
+                    <td>1 ساعة و 6 دقيقة</td>
+                    <td>
+                        <div class="wait-bar">
+                            <div class="wait-fill" style="width: 17.73124834349324%; background: #fd7e14"></div>
+                        </div>
+                        17.7%
+                    </td>
+                    <td></td>
+                </tr>
+            
+                <tr>
+                    <td>العيزرية</td>
+                    <td class="status-open">مفتوح</td>
+                    <td>33.1 دقيقة</td>
+                    <td>
+                        <div class="wait-bar">
+                            <div class="wait-fill" style="width: 8.772859793267957%; background: #28a745"></div>
+                        </div>
+                        8.8%
+                    </td>
+                    <td></td>
+                </tr>
+            
+                <tr>
+                    <td>النشاش</td>
+                    <td class="status-open">مفتوح</td>
+                    <td>35.6 دقيقة</td>
+                    <td>
+                        <div class="wait-bar">
+                            <div class="wait-fill" style="width: 9.435462496686986%; background: #28a745"></div>
+                        </div>
+                        9.4%
+                    </td>
+                    <td></td>
+                </tr>
+            
+                <tr>
+                    <td>قلنديا</td>
+                    <td class="status-open">مفتوح</td>
+                    <td>31.5 دقيقة</td>
+                    <td>
+                        <div class="wait-bar">
+                            <div class="wait-fill" style="width: 8.348794063079778%; background: #28a745"></div>
+                        </div>
+                        8.3%
+                    </td>
+                    <td></td>
+                </tr>
+            
+                <tr>
+                    <td>النبي يونس</td>
+                    <td class="status-open">مفتوح</td>
+                    <td>30.5 دقيقة</td>
+                    <td>
+                        <div class="wait-bar">
+                            <div class="wait-fill" style="width: 8.083752981712164%; background: #28a745"></div>
+                        </div>
+                        8.1%
+                    </td>
+                    <td></td>
+                </tr>
+            
+                <tr>
+                    <td>الكونتينر</td>
+                    <td class="status-open">مفتوح</td>
+                    <td>30.4 دقيقة</td>
+                    <td>
+                        <div class="wait-bar">
+                            <div class="wait-fill" style="width: 8.057248873575404%; background: #28a745"></div>
+                        </div>
+                        8.1%
+                    </td>
+                    <td></td>
+                </tr>
+            
+                <tr>
+                    <td>بورين</td>
+                    <td class="status-closed">مغلق</td>
+                    <td>23.7 دقيقة</td>
+                    <td>
+                        <div class="wait-bar">
+                            <div class="wait-fill" style="width: 6.281473628412404%; background: #dc3545"></div>
+                        </div>
+                        6.3%
+                    </td>
+                    <td></td>
+                </tr>
+            
+                <tr>
+                    <td>عورتا</td>
+                    <td class="status-closed">مغلق</td>
+                    <td>23.1 دقيقة</td>
+                    <td>
+                        <div class="wait-bar">
+                            <div class="wait-fill" style="width: 6.122448979591836%; background: #dc3545"></div>
+                        </div>
+                        6.1%
+                    </td>
+                    <td></td>
+                </tr>
+            
+                <tr>
+                    <td>اريحا</td>
+                    <td class="status-open">مفتوح</td>
+                    <td>36.6 دقيقة</td>
+                    <td>
+                        <div class="wait-bar">
+                            <div class="wait-fill" style="width: 9.7005035780546%; background: #28a745"></div>
+                        </div>
+                        9.7%
+                    </td>
+                    <td></td>
+                </tr>
+            
+                <tr>
+                    <td>الفندق</td>
+                    <td class="status-open">مفتوح</td>
+                    <td>16.9 دقيقة</td>
+                    <td>
+                        <div class="wait-bar">
+                            <div class="wait-fill" style="width: 4.479194275112642%; background: #28a745"></div>
+                        </div>
+                        4.5%
+                    </td>
+                    <td></td>
+                </tr>
+            
+                <tr>
+                    <td>الحمرا</td>
+                    <td class="status-sever_traffic_jam">ازدحام شديد</td>
+                    <td>2 ساعة و 23 دقيقة</td>
+                    <td>
+                        <div class="wait-bar">
+                            <div class="wait-fill" style="width: 37.9803869599788%; background: #fd7e14"></div>
+                        </div>
+                        38.0%
+                    </td>
+                    <td></td>
+                </tr>
+            
+                <tr>
+                    <td>دير شرف</td>
+                    <td class="status-open">مفتوح</td>
+                    <td>30.8 دقيقة</td>
+                    <td>
+                        <div class="wait-bar">
+                            <div class="wait-fill" style="width: 8.16326530612245%; background: #28a745"></div>
+                        </div>
+                        8.2%
+                    </td>
+                    <td></td>
+                </tr>
+            
+                <tr>
+                    <td>المربعه</td>
+                    <td class="status-closed">مغلق</td>
+                    <td>10.0 دقيقة</td>
+                    <td>
+                        <div class="wait-bar">
+                            <div class="wait-fill" style="width: 2.6504108136761197%; background: #dc3545"></div>
+                        </div>
+                        2.7%
+                    </td>
+                    <td></td>
+                </tr>
+            
+                <tr>
+                    <td>جبع</td>
+                    <td class="status-open">مفتوح</td>
+                    <td>31.5 دقيقة</td>
+                    <td>
+                        <div class="wait-bar">
+                            <div class="wait-fill" style="width: 8.348794063079778%; background: #28a745"></div>
+                        </div>
+                        8.3%
+                    </td>
+                    <td></td>
+                </tr>
+            
+                <tr>
+                    <td>صره</td>
+                    <td class="status-open">مفتوح</td>
+                    <td>23.5 دقيقة</td>
+                    <td>
+                        <div class="wait-bar">
+                            <div class="wait-fill" style="width: 6.228465412138881%; background: #28a745"></div>
+                        </div>
+                        6.2%
+                    </td>
+                    <td></td>
+                </tr>
+            
+            </table>
+            <div class="footer">
+                تم إنشاء التقرير باستخدام خوارزمية XGBoost مع تحليل الأنماط التاريخية<br>
+                آخر تحديث: 2025-05-07 15:30<br>
+                <span class="warning">ملاحظة: التنبؤات للحالات المغلقة تعتمد على بيانات محدودة وقد تكون أقل دقة</span>
+            </div>
+        </body>
+        </html>
+        

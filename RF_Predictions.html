@@ -1,0 +1,408 @@
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>توقعات أوقات الانتظار - Random Forest</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; direction: rtl; }
+        h1 { color: #2c3e50; text-align: center; }
+        table { width: 80%; margin: 20px auto; border-collapse: collapse; }
+        th, td { padding: 12px; border: 1px solid #ddd; text-align: center; }
+        th { background-color: #6c757d; color: white; }
+        tr:nth-child(even) { background-color: #f2f2f2; }
+        .footer { margin-top: 20px; text-align: center; font-size: 12px; color: #7f8c8d; }
+        .wait-bar { height: 20px; background: #e9ecef; margin: 5px 0; }
+        .wait-fill { height: 100%; background: #007bff; }
+    </style>
+</head>
+<body>
+    <h1>توقعات أوقات الانتظار على الحواجز</h1>
+    <table>
+        <tr>
+            <th>رقم الحاجز</th>
+            <th>الحالة</th>
+            <th>الوقت المتوقع</th>
+            <th>النسبة</th>
+        </tr>
+
+        <tr>
+            <td>35</td>
+            <td>open</td>
+            <td>33.9 دقيقة</td>
+            <td>
+                <div class="wait-bar">
+                    <div class="wait-fill" style="width: 17.889182058047492%"></div>
+                </div>
+            </td>
+        </tr>
+    
+        <tr>
+            <td>26</td>
+            <td>open</td>
+            <td>3 ساعة و 9 دقيقة</td>
+            <td>
+                <div class="wait-bar">
+                    <div class="wait-fill" style="width: 100.0%"></div>
+                </div>
+            </td>
+        </tr>
+    
+        <tr>
+            <td>24</td>
+            <td>open</td>
+            <td>2 ساعة و 40 دقيقة</td>
+            <td>
+                <div class="wait-bar">
+                    <div class="wait-fill" style="width: 84.43271767810026%"></div>
+                </div>
+            </td>
+        </tr>
+    
+        <tr>
+            <td>27</td>
+            <td>open</td>
+            <td>1 ساعة و 24 دقيقة</td>
+            <td>
+                <div class="wait-bar">
+                    <div class="wait-fill" style="width: 44.43271767810026%"></div>
+                </div>
+            </td>
+        </tr>
+    
+        <tr>
+            <td>38</td>
+            <td>open</td>
+            <td>1 ساعة و 26 دقيقة</td>
+            <td>
+                <div class="wait-bar">
+                    <div class="wait-fill" style="width: 45.48812664907652%"></div>
+                </div>
+            </td>
+        </tr>
+    
+        <tr>
+            <td>23</td>
+            <td>closed</td>
+            <td>1 ساعة و 22 دقيقة</td>
+            <td>
+                <div class="wait-bar">
+                    <div class="wait-fill" style="width: 43.377308707124016%"></div>
+                </div>
+            </td>
+        </tr>
+    
+        <tr>
+            <td>21</td>
+            <td>closed</td>
+            <td>1 ساعة و 46 دقيقة</td>
+            <td>
+                <div class="wait-bar">
+                    <div class="wait-fill" style="width: 56.09498680738786%"></div>
+                </div>
+            </td>
+        </tr>
+    
+        <tr>
+            <td>30</td>
+            <td>open</td>
+            <td>1 ساعة و 27 دقيقة</td>
+            <td>
+                <div class="wait-bar">
+                    <div class="wait-fill" style="width: 46.01583113456464%"></div>
+                </div>
+            </td>
+        </tr>
+    
+        <tr>
+            <td>5</td>
+            <td>closed</td>
+            <td>51.4 دقيقة</td>
+            <td>
+                <div class="wait-bar">
+                    <div class="wait-fill" style="width: 27.12401055408971%"></div>
+                </div>
+            </td>
+        </tr>
+    
+        <tr>
+            <td>18</td>
+            <td>closed</td>
+            <td>38.9 دقيقة</td>
+            <td>
+                <div class="wait-bar">
+                    <div class="wait-fill" style="width: 20.527704485488126%"></div>
+                </div>
+            </td>
+        </tr>
+    
+        <tr>
+            <td>17</td>
+            <td>open</td>
+            <td>35.2 دقيقة</td>
+            <td>
+                <div class="wait-bar">
+                    <div class="wait-fill" style="width: 18.57519788918206%"></div>
+                </div>
+            </td>
+        </tr>
+    
+        <tr>
+            <td>31</td>
+            <td>closed</td>
+            <td>44.3 دقيقة</td>
+            <td>
+                <div class="wait-bar">
+                    <div class="wait-fill" style="width: 23.37730870712401%"></div>
+                </div>
+            </td>
+        </tr>
+    
+        <tr>
+            <td>3</td>
+            <td>open</td>
+            <td>35.6 دقيقة</td>
+            <td>
+                <div class="wait-bar">
+                    <div class="wait-fill" style="width: 18.78627968337731%"></div>
+                </div>
+            </td>
+        </tr>
+    
+        <tr>
+            <td>29</td>
+            <td>open</td>
+            <td>35.0 دقيقة</td>
+            <td>
+                <div class="wait-bar">
+                    <div class="wait-fill" style="width: 18.46965699208443%"></div>
+                </div>
+            </td>
+        </tr>
+    
+        <tr>
+            <td>13</td>
+            <td>open</td>
+            <td>40.9 دقيقة</td>
+            <td>
+                <div class="wait-bar">
+                    <div class="wait-fill" style="width: 21.58311345646438%"></div>
+                </div>
+            </td>
+        </tr>
+    
+        <tr>
+            <td>22</td>
+            <td>open</td>
+            <td>35.6 دقيقة</td>
+            <td>
+                <div class="wait-bar">
+                    <div class="wait-fill" style="width: 18.78627968337731%"></div>
+                </div>
+            </td>
+        </tr>
+    
+        <tr>
+            <td>8</td>
+            <td>open</td>
+            <td>35.2 دقيقة</td>
+            <td>
+                <div class="wait-bar">
+                    <div class="wait-fill" style="width: 18.57519788918206%"></div>
+                </div>
+            </td>
+        </tr>
+    
+        <tr>
+            <td>7</td>
+            <td>open</td>
+            <td>44.0 دقيقة</td>
+            <td>
+                <div class="wait-bar">
+                    <div class="wait-fill" style="width: 23.218997361477573%"></div>
+                </div>
+            </td>
+        </tr>
+    
+        <tr>
+            <td>12</td>
+            <td>sever_traffic_jam</td>
+            <td>34.6 دقيقة</td>
+            <td>
+                <div class="wait-bar">
+                    <div class="wait-fill" style="width: 18.258575197889183%"></div>
+                </div>
+            </td>
+        </tr>
+    
+        <tr>
+            <td>9</td>
+            <td>closed</td>
+            <td>36.1 دقيقة</td>
+            <td>
+                <div class="wait-bar">
+                    <div class="wait-fill" style="width: 19.050131926121374%"></div>
+                </div>
+            </td>
+        </tr>
+    
+        <tr>
+            <td>16</td>
+            <td>open</td>
+            <td>53.9 دقيقة</td>
+            <td>
+                <div class="wait-bar">
+                    <div class="wait-fill" style="width: 28.443271767810025%"></div>
+                </div>
+            </td>
+        </tr>
+    
+        <tr>
+            <td>20</td>
+            <td>open</td>
+            <td>36.3 دقيقة</td>
+            <td>
+                <div class="wait-bar">
+                    <div class="wait-fill" style="width: 19.155672823218996%"></div>
+                </div>
+            </td>
+        </tr>
+    
+        <tr>
+            <td>6</td>
+            <td>open</td>
+            <td>31.3 دقيقة</td>
+            <td>
+                <div class="wait-bar">
+                    <div class="wait-fill" style="width: 16.517150395778366%"></div>
+                </div>
+            </td>
+        </tr>
+    
+        <tr>
+            <td>34</td>
+            <td>open</td>
+            <td>31.3 دقيقة</td>
+            <td>
+                <div class="wait-bar">
+                    <div class="wait-fill" style="width: 16.517150395778366%"></div>
+                </div>
+            </td>
+        </tr>
+    
+        <tr>
+            <td>36</td>
+            <td>open</td>
+            <td>31.3 دقيقة</td>
+            <td>
+                <div class="wait-bar">
+                    <div class="wait-fill" style="width: 16.517150395778366%"></div>
+                </div>
+            </td>
+        </tr>
+    
+        <tr>
+            <td>10</td>
+            <td>open</td>
+            <td>58.1 دقيقة</td>
+            <td>
+                <div class="wait-bar">
+                    <div class="wait-fill" style="width: 30.659630606860162%"></div>
+                </div>
+            </td>
+        </tr>
+    
+        <tr>
+            <td>11</td>
+            <td>open</td>
+            <td>31.5 دقيقة</td>
+            <td>
+                <div class="wait-bar">
+                    <div class="wait-fill" style="width: 16.62269129287599%"></div>
+                </div>
+            </td>
+        </tr>
+    
+        <tr>
+            <td>37</td>
+            <td>open</td>
+            <td>31.3 دقيقة</td>
+            <td>
+                <div class="wait-bar">
+                    <div class="wait-fill" style="width: 16.517150395778366%"></div>
+                </div>
+            </td>
+        </tr>
+    
+        <tr>
+            <td>19</td>
+            <td>open</td>
+            <td>33.0 دقيقة</td>
+            <td>
+                <div class="wait-bar">
+                    <div class="wait-fill" style="width: 17.41424802110818%"></div>
+                </div>
+            </td>
+        </tr>
+    
+        <tr>
+            <td>14</td>
+            <td>open</td>
+            <td>31.3 دقيقة</td>
+            <td>
+                <div class="wait-bar">
+                    <div class="wait-fill" style="width: 16.517150395778366%"></div>
+                </div>
+            </td>
+        </tr>
+    
+        <tr>
+            <td>15</td>
+            <td>open</td>
+            <td>31.3 دقيقة</td>
+            <td>
+                <div class="wait-bar">
+                    <div class="wait-fill" style="width: 16.517150395778366%"></div>
+                </div>
+            </td>
+        </tr>
+    
+        <tr>
+            <td>2</td>
+            <td>open</td>
+            <td>31.0 دقيقة</td>
+            <td>
+                <div class="wait-bar">
+                    <div class="wait-fill" style="width: 16.358839050131927%"></div>
+                </div>
+            </td>
+        </tr>
+    
+        <tr>
+            <td>33</td>
+            <td>closed</td>
+            <td>30.4 دقيقة</td>
+            <td>
+                <div class="wait-bar">
+                    <div class="wait-fill" style="width: 16.04221635883905%"></div>
+                </div>
+            </td>
+        </tr>
+    
+        <tr>
+            <td>1</td>
+            <td>open</td>
+            <td>29.5 دقيقة</td>
+            <td>
+                <div class="wait-bar">
+                    <div class="wait-fill" style="width: 15.567282321899736%"></div>
+                </div>
+            </td>
+        </tr>
+    
+    </table>
+    <div class="footer">
+        تم إنشاء التقرير في: 2025-05-05 20:42 | نموذج Random Forest
+    </div>
+</body>
+</html>

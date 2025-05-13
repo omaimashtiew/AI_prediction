@@ -1,0 +1,62 @@
+INFO:root:»œ¡ ⁄„·Ì… ≈‰‘«¡ «· ﬁ—Ì— «·„Õ”‰...
+ERROR:root:Œÿ√ ›Ì  Õ„Ì· «·»Ì«‰« : Execution failed on sql '
+        SELECT s.*, f.name, f.location 
+        FROM tareeqy_fencestatus s
+        JOIN tareeqy_fence f ON s.fence_id = f.id
+        ORDER BY s.message_time
+        ': 1054 (42S22): Unknown column 'f.location' in 'field list'
+ERROR:root:·« Ì„ﬂ‰ «·„ «»⁄… - »Ì«‰«  ›«—€…
+INFO:root:»œ¡ ⁄„·Ì… ≈‰‘«¡ «· ﬁ—Ì— «·„Õ”‰...
+ERROR:root:Œÿ√ ›Ì  Õ„Ì· «·»Ì«‰« : Execution failed on sql '
+        SELECT s.*, f.name, f.location 
+        FROM tareeqy_fencestatus s
+        JOIN tareeqy_fence f ON s.fence_id = f.id
+        ORDER BY s.message_time
+        ': 1054 (42S22): Unknown column 'f.location' in 'field list'
+ERROR:root:·« Ì„ﬂ‰ «·„ «»⁄… - »Ì«‰«  ›«—€…
+INFO:root:Starting enhanced report generation process...
+INFO:root:MAE for duration model: 156.60 minutes
+ERROR:root:Error training duration model: [Errno 2] No such file or directory: 'models/duration_model.joblib'
+ERROR:root:Error training model for fence 1: [Errno 2] No such file or directory: 'models/time_model_1.joblib'
+ERROR:root:Error training model for fence 2: [Errno 2] No such file or directory: 'models/time_model_2.joblib'
+ERROR:root:Error training model for fence 3: [Errno 2] No such file or directory: 'models/time_model_3.joblib'
+ERROR:root:Error training model for fence 4: [Errno 2] No such file or directory: 'models/time_model_4.joblib'
+ERROR:root:Error training model for fence 5: [Errno 2] No such file or directory: 'models/time_model_5.joblib'
+ERROR:root:Error training model for fence 6: [Errno 2] No such file or directory: 'models/time_model_6.joblib'
+ERROR:root:Error training model for fence 7: [Errno 2] No such file or directory: 'models/time_model_7.joblib'
+ERROR:root:Error training model for fence 8: [Errno 2] No such file or directory: 'models/time_model_8.joblib'
+ERROR:root:Error training model for fence 9: [Errno 2] No such file or directory: 'models/time_model_9.joblib'
+ERROR:root:Error training model for fence 10: [Errno 2] No such file or directory: 'models/time_model_10.joblib'
+ERROR:root:Error training model for fence 11: [Errno 2] No such file or directory: 'models/time_model_11.joblib'
+ERROR:root:Error training model for fence 12: [Errno 2] No such file or directory: 'models/time_model_12.joblib'
+ERROR:root:Error training model for fence 13: [Errno 2] No such file or directory: 'models/time_model_13.joblib'
+ERROR:root:Error training model for fence 14: [Errno 2] No such file or directory: 'models/time_model_14.joblib'
+ERROR:root:Error training model for fence 15: [Errno 2] No such file or directory: 'models/time_model_15.joblib'
+ERROR:root:Error training model for fence 16: [Errno 2] No such file or directory: 'models/time_model_16.joblib'
+ERROR:root:Error training model for fence 17: [Errno 2] No such file or directory: 'models/time_model_17.joblib'
+ERROR:root:Error training model for fence 18: [Errno 2] No such file or directory: 'models/time_model_18.joblib'
+ERROR:root:Error training model for fence 19: [Errno 2] No such file or directory: 'models/time_model_19.joblib'
+ERROR:root:Error training model for fence 20: [Errno 2] No such file or directory: 'models/time_model_20.joblib'
+ERROR:root:Error training model for fence 21: [Errno 2] No such file or directory: 'models/time_model_21.joblib'
+ERROR:root:Error training model for fence 22: [Errno 2] No such file or directory: 'models/time_model_22.joblib'
+ERROR:root:Error training model for fence 23: [Errno 2] No such file or directory: 'models/time_model_23.joblib'
+ERROR:root:Error training model for fence 24: [Errno 2] No such file or directory: 'models/time_model_24.joblib'
+ERROR:root:Error training model for fence 25: [Errno 2] No such file or directory: 'models/time_model_25.joblib'
+ERROR:root:Error training model for fence 26: [Errno 2] No such file or directory: 'models/time_model_26.joblib'
+ERROR:root:Error training model for fence 27: [Errno 2] No such file or directory: 'models/time_model_27.joblib'
+ERROR:root:Error training model for fence 30: [Errno 2] No such file or directory: 'models/time_model_30.joblib'
+ERROR:root:Error training model for fence 31: [Errno 2] No such file or directory: 'models/time_model_31.joblib'
+ERROR:root:Error training model for fence 32: [Errno 2] No such file or directory: 'models/time_model_32.joblib'
+ERROR:root:Error training model for fence 33: [Errno 2] No such file or directory: 'models/time_model_33.joblib'
+ERROR:root:Error training model for fence 34: [Errno 2] No such file or directory: 'models/time_model_34.joblib'
+ERROR:root:Error training model for fence 35: [Errno 2] No such file or directory: 'models/time_model_35.joblib'
+ERROR:root:Error training model for fence 36: [Errno 2] No such file or directory: 'models/time_model_36.joblib'
+ERROR:root:Error training model for fence 37: [Errno 2] No such file or directory: 'models/time_model_37.joblib'
+ERROR:root:Error training model for fence 38: [Errno 2] No such file or directory: 'models/time_model_38.joblib'
+INFO:root:Successfully generated enhanced report: Enhanced_Predictions_Report.html
+INFO:root:Successfully completed enhanced report generation
+INFO:root:Starting enhanced report generation process...
+INFO:root:Improved MAE for duration model: 151.26 minutes
+ERROR:root:Error training improved duration model: [Errno 2] No such file or directory: 'models/improved_duration_model.joblib'
+ERROR:root:Error generating report: 'time_based_prediction'
+INFO:root:Successfully completed enhanced report generation

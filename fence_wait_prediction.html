@@ -1,0 +1,150 @@
+
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <title>Fence Waiting Time Prediction</title>
+        <style>
+            body { font-family: Arial, sans-serif; margin: 20px; }
+            .container { display: flex; justify-content: space-around; }
+            .model { border: 1px solid #ddd; padding: 20px; border-radius: 5px; width: 45%; }
+            h1 { color: #333; text-align: center; }
+            h2 { color: #444; }
+            .metrics { background-color: #f5f5f5; padding: 10px; border-radius: 5px; }
+            .prediction-form { margin-top: 20px; }
+            input, select { margin: 5px 0; padding: 8px; width: 100%; }
+            button { background-color: #4CAF50; color: white; padding: 10px; border: none; cursor: pointer; width: 100%; }
+            button:hover { background-color: #45a049; }
+            .result { margin-top: 20px; padding: 10px; background-color: #e9f7ef; border-radius: 5px; }
+        </style>
+    </head>
+    <body>
+        <h1>Fence Waiting Time Prediction</h1>
+        
+        <div class="container">
+            <div class="model">
+                <h2>Random Forest Model</h2>
+                <div class="metrics">
+                    <p><strong>Mean Absolute Error:</strong> 2628.15 minutes</p>
+                    <p><strong>Root Mean Squared Error:</strong> 5177.71 minutes</p>
+                </div>
+                
+                <div class="prediction-form">
+                    <h3>Predict Waiting Time</h3>
+                    <form id="rf-form">
+                        <label for="rf-fence">Fence:</label>
+                        <select id="rf-fence" name="fence">
+                            <option value="1">صره</option>
+                            <option value="2">دير شرف</option>
+                            <option value="3">عين سينيا</option>
+                            <option value="4">روابي</option>
+                            <option value="5">جبع</option>
+                        </select>
+                        
+                        <label for="rf-status">Status:</label>
+                        <select id="rf-status" name="status">
+                            <option value="open">Open</option>
+                            <option value="closed">Closed</option>
+                        </select>
+                        
+                        <label for="rf-date">Date:</label>
+                        <input type="date" id="rf-date" name="date" required>
+                        
+                        <label for="rf-time">Time:</label>
+                        <input type="time" id="rf-time" name="time" required>
+                        
+                        <button type="button" onclick="predictRF()">Predict Waiting Time</button>
+                    </form>
+                    
+                    <div id="rf-result" class="result" style="display: none;">
+                        <h3>Prediction Result</h3>
+                        <p id="rf-prediction"></p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="model">
+                <h2>XGBoost Model</h2>
+                <div class="metrics">
+                    <p><strong>Mean Absolute Error:</strong> 3015.72 minutes</p>
+                    <p><strong>Root Mean Squared Error:</strong> 5771.21 minutes</p>
+                </div>
+                
+                <div class="prediction-form">
+                    <h3>Predict Waiting Time</h3>
+                    <form id="xgb-form">
+                        <label for="xgb-fence">Fence:</label>
+                        <select id="xgb-fence" name="fence">
+                            <option value="1">صره</option>
+                            <option value="2">دير شرف</option>
+                            <option value="3">عين سينيا</option>
+                            <option value="4">روابي</option>
+                            <option value="5">جبع</option>
+                        </select>
+                        
+                        <label for="xgb-status">Status:</label>
+                        <select id="xgb-status" name="status">
+                            <option value="open">Open</option>
+                            <option value="closed">Closed</option>
+                        </select>
+                        
+                        <label for="xgb-date">Date:</label>
+                        <input type="date" id="xgb-date" name="date" required>
+                        
+                        <label for="xgb-time">Time:</label>
+                        <input type="time" id="xgb-time" name="time" required>
+                        
+                        <button type="button" onclick="predictXGB()">Predict Waiting Time</button>
+                    </form>
+                    
+                    <div id="xgb-result" class="result" style="display: none;">
+                        <h3>Prediction Result</h3>
+                        <p id="xgb-prediction"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <script>
+            function predictRF() {
+                // Get form values
+                const fenceId = document.getElementById('rf-fence').value;
+                const status = document.getElementById('rf-status').value;
+                const date = document.getElementById('rf-date').value;
+                const time = document.getElementById('rf-time').value;
+                
+                // Here you would typically send this data to a backend API
+                // For this example, we'll simulate a prediction
+                const simulatedPrediction = Math.max(5, Math.random() * 60).toFixed(0);
+                
+                // Display result
+                document.getElementById('rf-prediction').textContent = 
+                    'Estimated waiting time at ' + 
+                    document.getElementById('rf-fence').options[document.getElementById('rf-fence').selectedIndex].text + 
+                    ' (status: ' + status + ') on ' + date + ' at ' + time + ': ' + 
+                    simulatedPrediction + ' minutes';
+                document.getElementById('rf-result').style.display = 'block';
+            }
+            
+            function predictXGB() {
+                // Get form values
+                const fenceId = document.getElementById('xgb-fence').value;
+                const status = document.getElementById('xgb-status').value;
+                const date = document.getElementById('xgb-date').value;
+                const time = document.getElementById('xgb-time').value;
+                
+                // Here you would typically send this data to a backend API
+                // For this example, we'll simulate a prediction
+                const simulatedPrediction = Math.max(5, Math.random() * 60).toFixed(0);
+                
+                // Display result
+                document.getElementById('xgb-prediction').textContent = 
+                    'Estimated waiting time at ' + 
+                    document.getElementById('xgb-fence').options[document.getElementById('xgb-fence').selectedIndex].text + 
+                    ' (status: ' + status + ') on ' + date + ' at ' + time + ': ' + 
+                    simulatedPrediction + ' minutes';
+                document.getElementById('xgb-result').style.display = 'block';
+            }
+        </script>
+    </body>
+    </html>
+    
