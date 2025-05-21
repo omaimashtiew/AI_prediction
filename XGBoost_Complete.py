@@ -3,17 +3,18 @@ import pandas as pd
 import numpy as np
 from datetime import datetime
 import time
-from sklearn.model_selection import train_test_split, cross_val_score
+from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import LabelEncoder, StandardScaler
 from sklearn.metrics import mean_absolute_error, median_absolute_error, r2_score
 from sklearn.cluster import KMeans
 import xgboost as xgb
 import joblib
 import os
-from flask import Flask, render_template_string
-import matplotlib.pyplot as plt
+from lazypredict.Supervised import LazyRegressor
+from sklearn.ensemble import RandomForestRegressor, GradientBoostingRegressor
+from tabulate import tabulate
 
-app = Flask(__name__)
+# إعدادات الملفات
 MODEL_PATH = "wait_time_model.pkl"
 SCALER_PATH = "scaler.pkl"
 CLUSTER_PATH = "kmeans_model.pkl"
@@ -82,6 +83,7 @@ def calculate_geo_features(fences_df):
     
     return fences_df
 
+# معالجة البيانات
 # معالجة البيانات
 def preprocess_data(fences_df, status_df):
     # معالجة القيم المفقودة في fences_df
@@ -156,9 +158,8 @@ def preprocess_data(fences_df, status_df):
     # تقليم القيم المتطرفة
     df['wait_time'] = df['wait_time'].clip(lower=5, upper=120)
     
-    return df, le_status, le_city, le_day_part
-
-# تحضير بيانات التدريب
+    return df, le_status, le_city, le_day_part  # هذه السطر كان ناقصًا
+  
 def prepare_training_data(df):
     features = [
         'fence_id', 'latitude', 'longitude', 'hour', 'day_of_week',
@@ -180,59 +181,7 @@ def prepare_training_data(df):
     
     return X_scaled, y
 
-# تدريب النموذج - تصحيح مشكلة Early Stopping
-# تدريب النموذج - النسخة المعدلة
-def load_or_train_model(X, y):
-    if os.path.exists(MODEL_PATH):
-        try:
-            model = joblib.load(MODEL_PATH)
-            if hasattr(model, 'n_features_in_') and model.n_features_in_ != X.shape[1]:
-                print(f"تحذير: عدم تطابق الميزات! سيتم حذف النموذج القديم. متوقع {X.shape[1]} ميزات، وجدنا {model.n_features_in_}")
-                os.remove(MODEL_PATH)
-                raise FileNotFoundError
-            return model
-        except Exception as e:
-            print(f"خطأ في تحميل النموذج: {e}. سيتم إعادة التدريب...")
-    
-    # تقسيم البيانات إلى تدريب واختبار
-    X_train, X_test, y_train, y_test = train_test_split(
-        X, y, test_size=0.2, random_state=42
-    )
-    
-    # تعريف النموذج مع معلمات معقولة
-    model = xgb.XGBRegressor(
-        objective='reg:squarederror',
-        n_estimators=300,
-        learning_rate=0.03,
-        max_depth=4,
-        subsample=0.8,
-        colsample_bytree=0.8,
-        reg_alpha=0.1,
-        reg_lambda=1.0,
-        random_state=42,
-        n_jobs=-1
-    )
 
-    # تدريب النموذج بدون early stopping
-    model.fit(X_train, y_train)
-    
-    # تقييم النموذج
-    y_pred = model.predict(X_test)
-    mae = mean_absolute_error(y_test, y_pred)
-    medae = median_absolute_error(y_test, y_pred)
-    r2 = r2_score(y_test, y_pred)
-    
-    print(f"Mean Absolute Error: {mae:.2f} دقيقة")
-    print(f"Median Absolute Error: {medae:.2f} دقيقة")
-    print(f"R2 Score: {r2:.2f}")
-    
-    # حفظ النموذج
-    joblib.dump(model, MODEL_PATH)
-    
-    
-    return model
-
-# التنبؤ
 def predict_all_fences(model, fences_df, current_time, le_status, le_city, le_day_part):
     try:
         # تحميل النماذج المساعدة
@@ -280,9 +229,11 @@ def predict_all_fences(model, fences_df, current_time, le_status, le_city, le_da
             current_status = result[0] if result else 'unknown'
             conn.close()
 
-            if current_status == 'open':
-                predicted_wait = 0
-            else:
+            # تعريف wait_display بقيمة افتراضية
+            wait_display = "0 دقيقة"
+            predicted_wait = 0
+
+            if current_status != 'open':
                 hour = current_time.hour
                 day_part = 'night' if hour < 6 else 'morning' if hour < 12 else 'afternoon' if hour < 18 else 'evening'
                 
@@ -293,23 +244,22 @@ def predict_all_fences(model, fences_df, current_time, le_status, le_city, le_da
                 
                 # تحقق من صحة البيانات قبل التحويل
                 if current_status not in le_status.classes_:
-                    status_encoded = 0  # قيمة افتراضية
+                    status_encoded = 0
                 else:
                     status_encoded = le_status.transform([current_status])[0]
                     
                 if fence_city not in le_city.classes_:
-                    city_encoded = 0  # قيمة افتراضية
+                    city_encoded = 0
                 else:
                     city_encoded = le_city.transform([fence_city])[0]
                 
                 if day_part not in le_day_part.classes_:
-                    day_part_encoded = 0  # قيمة افتراضية
+                    day_part_encoded = 0
                 else:
                     day_part_encoded = le_day_part.transform([day_part])[0]
                 
                 # تحضير ميزات التنبؤ
                 try:
-                    # حساب التجميع الجغرافي
                     if pd.isna(fence_latitude) or pd.isna(fence_longitude):
                         geo_cluster = 0
                     else:
@@ -332,107 +282,110 @@ def predict_all_fences(model, fences_df, current_time, le_status, le_city, le_da
                     'day_part_encoded': day_part_encoded
                 }
                 
-                # تحويل الميزات إلى DataFrame
                 features_df = pd.DataFrame([features])
-                
-                # تطبيع القيم
                 features_scaled = scaler.transform(features_df)
                 
-                # التنبؤ
-                predicted_wait = model.predict(features_scaled)[0]
-                
-                # تعديل التنبؤ بناءً على الحالة الحالية
-                if current_status == 'sever_traffic_jam':
-                    predicted_wait = min(predicted_wait * 1.8, 100)
-                elif current_status == 'closed':
-                    predicted_wait = min(predicted_wait * 1.09, 90)
+                predicted_wait = int(round(model.predict(features_scaled)[0]))
+                if current_status == 'closed':
+                    predicted_wait = int(predicted_wait * 0.8)
+
+                if predicted_wait >= 60:
+                    hours = predicted_wait // 60
+                    minutes = predicted_wait % 60
+                    if minutes > 0:
+                        wait_display = f"{hours} ساعة و {minutes} دقيقة"
+                    else:
+                        wait_display = f"{hours} ساعة"
                 else:
-                    predicted_wait = min(predicted_wait, 60)
-                
-                # تقريب التنبؤ للحصول على أرقام أكثر واقعية
+                    wait_display = f"{predicted_wait} دقيقة"
+
         except Exception as e:
             print(f"خطأ في التنبؤ للبوابة {fence['id']}: {e}")
-            predicted_wait = 15  # قيمة افتراضية في حالة الخطأ
+            predicted_wait = 15
+            wait_display = "15 دقيقة"
 
         predictions.append({
             'fence_id': fence['id'],
             'fence_name': fence['name'],
             'city': fence['city'] if pd.notna(fence['city']) else 'غير معروف',
             'current_status': current_status,
-            'predicted_wait': predicted_wait
+            'predicted_wait': predicted_wait,
+            'wait_display': wait_display
         })
     return predictions
 
-HTML_TEMPLATE = """
-<!DOCTYPE html>
-<html dir="rtl">
-<head>
-    <title>توقعات أوقات الانتظار</title>
-    <meta charset="utf-8">
-    <style>
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 20px; background-color: #f5f5f5; }
-        h1 { color: #333; text-align: center; margin-bottom: 20px; }
-        table { width: 100%; border-collapse: collapse; margin: 0 auto; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
-        th, td { padding: 12px; text-align: right; border: 1px solid #ddd; }
-        th { background-color: #4CAF50; color: white; }
-        tr:nth-child(even) { background-color: #f2f2f2; }
-        .low-wait { background-color: #d4edda; }
-        .medium-wait { background-color: #fff3cd; }
-        .high-wait { background-color: #f8d7da; }
-        .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
-        .status-info { margin-top: 20px; text-align: center; }
-        .status-badge {
-            display: inline-block;
-            padding: 5px 10px;
-            margin: 5px;
-            border-radius: 5px;
-            font-weight: bold;
-        }
-        .open { background-color: #d4edda; color: #155724; }
-        .moderate { background-color: #fff3cd; color: #856404; }
-        .closed { background-color: #f8d7da; color: #721c24; }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <h1>توقعات أوقات الانتظار - تحديث: {{ current_time }}</h1>
-        <div class="status-info">
-            <span class="status-badge open">وقت انتظار منخفض (أقل من 15 دقيقة)</span>
-            <span class="status-badge moderate">وقت انتظار متوسط (15-30 دقيقة)</span>
-            <span class="status-badge closed">وقت انتظار طويل (أكثر من 30 دقيقة)</span>
-        </div>
-        <table>
-            <tr>
-                <th>البوابة</th>
-                <th>المدينة</th>
-                <th>الحالة الحالية</th>
-                <th>وقت الانتظار المتوقع (دقيقة)</th>
-            </tr>
-            {% for pred in predictions %}
-            <tr class="{% if pred.predicted_wait <= 15 %}low-wait
-                      {% elif pred.predicted_wait <= 30 %}medium-wait
-                      {% else %}high-wait{% endif %}">
-                <td>{{ pred.fence_name }}</td>
-                <td>{{ pred.city }}</td>
-                <td>{{ pred.current_status }}</td>
-                <td>{{ pred.predicted_wait }}</td>
-            </tr>
-            {% endfor %}
-        </table>
-    </div>
-</body>
-</html>
-"""
 
-@app.route('/')
-def display_predictions():
+# تعديل دالة load_or_train_model
+def load_or_train_model(X, y):
+    # تقسيم البيانات
+    X_train, X_test, y_train, y_test = train_test_split(
+        X, y, test_size=0.2, random_state=42
+    )
+    
+    # قائمة النماذج التي نريد اختبارها
+    regressors = {
+        'XGBRegressor': xgb.XGBRegressor(
+            objective='reg:squarederror',
+            n_estimators=300,
+            learning_rate=0.03,
+            max_depth=4,
+            subsample=0.8,
+            colsample_bytree=0.8,
+            reg_alpha=0.1,
+            reg_lambda=1.0,
+            random_state=42,
+            n_jobs=-1
+        ),
+        'RandomForestRegressor': RandomForestRegressor(n_estimators=100, random_state=42),
+        'GradientBoostingRegressor': GradientBoostingRegressor(random_state=42)
+    }
+    
+    # تقييم كل نموذج
+    results = []
+    for name, model in regressors.items():
+        model.fit(X_train, y_train)
+        y_pred = model.predict(X_test)
+        
+        mae = mean_absolute_error(y_test, y_pred)
+        medae = median_absolute_error(y_test, y_pred)
+        r2 = r2_score(y_test, y_pred)
+        
+        results.append({
+            'Model': name,
+            'MAE': f"{mae:.2f}",
+            'MedianAE': f"{medae:.2f}",
+            'R2 Score': f"{r2:.4f}"
+        })
+    
+    # عرض النتائج في جدول
+    print("\n model comparassion  :")
+    print(tabulate(results, headers="keys", tablefmt="pretty", showindex=False))
+    
+    # اختيار أفضل نموذج بناءً على R-squared
+    best_model_info = max(results, key=lambda x: float(x['R2 Score']))
+    best_model_name = best_model_info['Model']
+    print(f"\n best model : {best_model_name}")
+    print(f"with R-squared: {best_model_info['R2 Score']}")
+    
+    # استخدام أفضل نموذج
+    best_model = regressors[best_model_name]
+    best_model.fit(X_train, y_train)
+    
+    # حفظ النموذج
+    joblib.dump(best_model, MODEL_PATH)
+    
+    return best_model
+
+# تعديل دالة display_predictions لتعرض النتائج مباشرة
+def main():
     try:
         # جلب البيانات
         fences_df, status_df = fetch_data()
         
         # التأكد من وجود بيانات كافية
         if fences_df.empty or status_df.empty:
-            return "لا توجد بيانات كافية لبناء النموذج", 500
+            print("لا توجد بيانات كافية لبناء النموذج")
+            return
         
         # معالجة البيانات
         df, le_status, le_city, le_day_part = preprocess_data(fences_df, status_df)
@@ -450,18 +403,18 @@ def display_predictions():
         # فرز البوابات حسب وقت الانتظار (تنازلياً)
         predictions = sorted(predictions, key=lambda x: x['predicted_wait'], reverse=True)
         
-        # عرض الصفحة مع التنبؤات
-        return render_template_string(HTML_TEMPLATE, 
-                                  predictions=predictions, 
-                                  current_time=current_time.strftime("%Y-%m-%d %H:%M:%S"))
+        # عرض النتائج في جدول
+        print("\n\nتوقعات أوقات الانتظار - تحديث:", current_time.strftime("%Y-%m-%d %H:%M:%S"))
+        print(tabulate(predictions, headers="keys", tablefmt="pretty"))
+        
     except Exception as e:
-        import traceback
-        error_details = traceback.format_exc()
-        return f"حدث خطأ: {str(e)}<br><pre>{error_details}</pre>", 500
+        print(f"حدث خطأ: {str(e)}")
 
 if __name__ == "__main__":
     # إنشاء مجلد للنماذج إذا لم يكن موجوداً
     if not os.path.exists('models'):
         os.makedirs('models')
     
-    app.run(debug=True, host='0.0.0.0', port=int(os.environ.get('PORT', 5000)))
+    main()
+
+
