@@ -286,9 +286,7 @@ def predict_all_fences(model, fences_df, current_time, le_status, le_city, le_da
                 features_scaled = scaler.transform(features_df)
                 
                 predicted_wait = int(round(model.predict(features_scaled)[0]))
-                if current_status == 'closed':
-                    predicted_wait = int(predicted_wait * 0.8)
-
+               
                 if predicted_wait >= 60:
                     hours = predicted_wait // 60
                     minutes = predicted_wait % 60
@@ -322,59 +320,30 @@ def load_or_train_model(X, y):
         X, y, test_size=0.2, random_state=42
     )
     
-    # قائمة النماذج التي نريد اختبارها
-    regressors = {
-        'XGBRegressor': xgb.XGBRegressor(
-            objective='reg:squarederror',
-            n_estimators=300,
-            learning_rate=0.03,
-            max_depth=4,
-            subsample=0.8,
-            colsample_bytree=0.8,
-            reg_alpha=0.1,
-            reg_lambda=1.0,
-            random_state=42,
-            n_jobs=-1
-        ),
-        'RandomForestRegressor': RandomForestRegressor(n_estimators=100, random_state=42),
-        'GradientBoostingRegressor': GradientBoostingRegressor(random_state=42)
-    }
+    model = RandomForestRegressor(
+        n_estimators=100,      # كما في الكود الأول
+        max_depth=None,        # عدم تحديد عمق أقصى (كما في الكود الأول)
+        min_samples_split=2,   # القيمة الافتراضية
+        min_samples_leaf=1,    # القيمة الافتراضية
+        max_features='sqrt',   # كما في الكود الأول (sqrt(n_features))
+        bootstrap=True,        # كما في الكود الأول
+        random_state=42,       # للتكرارية
+        n_jobs=-1,            # استخدام جميع الأنوية
+    )
     
-    # تقييم كل نموذج
-    results = []
-    for name, model in regressors.items():
-        model.fit(X_train, y_train)
-        y_pred = model.predict(X_test)
-        
-        mae = mean_absolute_error(y_test, y_pred)
-        medae = median_absolute_error(y_test, y_pred)
-        r2 = r2_score(y_test, y_pred)
-        
-        results.append({
-            'Model': name,
-            'MAE': f"{mae:.2f}",
-            'MedianAE': f"{medae:.2f}",
-            'R2 Score': f"{r2:.4f}"
-        })
+    model.fit(X_train, y_train)
     
-    # عرض النتائج في جدول
-    print("\n model comparassion  :")
-    print(tabulate(results, headers="keys", tablefmt="pretty", showindex=False))
+    # تقييم النموذج
+    y_pred = model.predict(X_test)
+    mae = mean_absolute_error(y_test, y_pred)
+    r2 = r2_score(y_test, y_pred)
     
-    # اختيار أفضل نموذج بناءً على R-squared
-    best_model_info = max(results, key=lambda x: float(x['R2 Score']))
-    best_model_name = best_model_info['Model']
-    print(f"\n best model : {best_model_name}")
-    print(f"with R-squared: {best_model_info['R2 Score']}")
+    print(f"\nأداء RandomForest:")
+    print(f"- متوسط الخطأ المطلق (MAE): {mae:.2f} دقيقة")
+    print(f"- معامل التحديد (R2 Score): {r2:.4f}")
     
-    # استخدام أفضل نموذج
-    best_model = regressors[best_model_name]
-    best_model.fit(X_train, y_train)
-    
-    # حفظ النموذج
-    joblib.dump(best_model, MODEL_PATH)
-    
-    return best_model
+    joblib.dump(model, MODEL_PATH)
+    return model
 
 # تعديل دالة display_predictions لتعرض النتائج مباشرة
 def main():
